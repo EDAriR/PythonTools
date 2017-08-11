@@ -1,0 +1,21 @@
+import requests
+import json
+import pandas
+
+jd = json.loads('{"item_shop_ids":[{"itemid":27289245,"adsid":0,"shopid":2046254,"campaignid":0},{"itemid":7129472,"adsid":0,"shopid":1530481,"campaignid":0},{"itemid":16209373,"adsid":0,"shopid":2062237,"campaignid":0},{"itemid":19221460,"adsid":0,"shopid":5352241,"campaignid":0},{"itemid":6643060,"adsid":0,"shopid":1838869,"campaignid":0},{"itemid":11547440,"adsid":0,"shopid":2698155,"campaignid":0},{"itemid":28017795,"adsid":0,"shopid":2129157,"campaignid":0},{"itemid":15662675,"adsid":0,"shopid":2904545,"campaignid":0},{"itemid":4051365,"adsid":0,"shopid":977572,"campaignid":0},{"itemid":4487322,"adsid":0,"shopid":2008537,"campaignid":0},{"itemid":16866152,"adsid":0,"shopid":3529520,"campaignid":0},{"itemid":29482976,"adsid":0,"shopid":3308403,"campaignid":0},{"itemid":5983594,"adsid":0,"shopid":2621062,"campaignid":0},{"itemid":19870695,"adsid":0,"shopid":2777206,"campaignid":0},{"itemid":29656790,"adsid":0,"shopid":3920283,"campaignid":0},{"itemid":4910167,"adsid":0,"shopid":2288661,"campaignid":0},{"itemid":8985364,"adsid":0,"shopid":3034905,"campaignid":0},{"itemid":10371678,"adsid":0,"shopid":2602518,"campaignid":0},{"itemid":21193157,"adsid":0,"shopid":1658140,"campaignid":0},{"itemid":3260158,"adsid":0,"shopid":1530481,"campaignid":0},{"itemid":22793158,"adsid":0,"shopid":2058566,"campaignid":0},{"itemid":15363861,"adsid":0,"shopid":2154163,"campaignid":0},{"itemid":18044700,"adsid":0,"shopid":1388986,"campaignid":0},{"itemid":8894838,"adsid":0,"shopid":3165203,"campaignid":0},{"itemid":5450581,"adsid":0,"shopid":1401109,"campaignid":0},{"itemid":18932751,"adsid":0,"shopid":5218484,"campaignid":0},{"itemid":23301376,"adsid":0,"shopid":4182766,"campaignid":0},{"itemid":10957673,"adsid":0,"shopid":321251,"campaignid":0},{"itemid":15330986,"adsid":0,"shopid":2454919,"campaignid":0},{"itemid":13866544,"adsid":0,"shopid":2513067,"campaignid":0},{"itemid":14093887,"adsid":0,"shopid":1760029,"campaignid":0},{"itemid":16260919,"adsid":0,"shopid":2732038,"campaignid":0},{"itemid":20076874,"adsid":0,"shopid":1531429,"campaignid":0},{"itemid":13255318,"adsid":0,"shopid":2660043,"campaignid":0},{"itemid":27782541,"adsid":0,"shopid":4644313,"campaignid":0},{"itemid":7607206,"adsid":0,"shopid":2260526,"campaignid":0},{"itemid":5396948,"adsid":0,"shopid":2403807,"campaignid":0},{"itemid":11837466,"adsid":0,"shopid":1079162,"campaignid":0},{"itemid":22811456,"adsid":0,"shopid":2454919,"campaignid":0},{"itemid":575269,"adsid":0,"shopid":14517,"campaignid":0},{"itemid":8985091,"adsid":0,"shopid":3034905,"campaignid":0},{"itemid":19271958,"adsid":0,"shopid":3375209,"campaignid":0},{"itemid":19837017,"adsid":0,"shopid":2058566,"campaignid":0},{"itemid":20134814,"adsid":0,"shopid":2575458,"campaignid":0},{"itemid":12233868,"adsid":0,"shopid":1160713,"campaignid":0},{"itemid":7226631,"adsid":0,"shopid":2968734,"campaignid":0},{"itemid":2032463,"adsid":0,"shopid":983281,"campaignid":0},{"itemid":8930462,"adsid":0,"shopid":1401109,"campaignid":0},{"itemid":12200818,"adsid":0,"shopid":2969059,"campaignid":0},{"itemid":21540208,"adsid":0,"shopid":4074085,"campaignid":0}]}')
+
+headers = {
+'Cookie':'SPC_F=hX7P0UpAEE1kvYnNUZ52hUqSJ0uA1aCC; REC_T_ID=b74c844c-22b6-11e7-985b-246e960f4c7c; SPC_T_ID="jEY1d0iZkb3E/nh1pnrkWmOoMiH5i4CCjD1/kjPLBmQaycRGN0YEvD5K2nhiS1gfMazHxTP80ba1S9BDSMbTquk0+/Qttz3iDIHSaVYJEeo="; SPC_T_IV="NKmqKHCxI4qlp63WEEqoCA=="; csrftoken=LsNWZXh3KhRKcx4bNoiW9ZbxHRH4QnOa; SPC_EC=-; _gat=1; SPC_IA=-1; SPC_U=-; SPC_SC_TK=; UYOMAPJWEMDGJ=; SPC_SC_UD=; _ga=GA1.2.607532384.1492355381; _gid=GA1.2.103595254.1497022646; SPC_SI=cbswop02rwjms7kb7239o2ptpe5j7icu',
+'Referer':'https://shopee.tw/%E5%AC%B0%E5%B9%BC%E7%AB%A5%E8%88%87%E6%AF%8D%E8%A6%AA-cat.100',
+'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+,'x-csrftoken':'LsNWZXh3KhRKcx4bNoiW9ZbxHRH4QnOa'
+}
+
+res = requests.post('https://shopee.tw/api/v1/items/', json= jd,headers =headers)
+
+df = pandas.DataFrame(res.json())
+
+writer = pandas.ExcelWriter('shopee' + '.xlsx')
+df.to_excel(writer, 'Sheet5')
+writer.save()
+print(df)
